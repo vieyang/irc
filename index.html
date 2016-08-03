@@ -16,15 +16,18 @@
     
     <script>
       var ref = new Wilddog("https://irc.wilddogio.com/");
+      
+      ref.child("msgs").on("child_added", function(datasnapshot) {    
+    console.log(datasnapshot.val());   // 结果会在 console 中打印出 "beijing"
+}, function(error){
+    // 处理请求失败打错误
+});
+      
     </script>
     
     
   </head>
   <body>
-   ref.child("msgs").on("child_added", function(datasnapshot) {    
-    console.log(datasnapshot.val());   // 结果会在 console 中打印出 "beijing"
-}, function(error){
-    // 处理请求失败打错误
-});
+   
   </body>
 </html>
