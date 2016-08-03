@@ -59,17 +59,26 @@
         
     function onUpdate() {
         if (name == "") {
-            alert("给自己起个昵称~~~")
+            alert("给自己起个昵称~~~");
             return;
         }
         
         var v = wtx.value;
+        if (v == "") {
+            wtx.value = "";
+            alert("输入点内容~~~");
+            wtx.value = "";
+            return;
+        }
+        
         
         ref.push({
             date: "123",
             msg: v,
             userid: name
         });
+        
+        wtx.value = "";
     }
     
     function initName() {
@@ -87,6 +96,19 @@
         });  
         name = ntx.value;
     }
+    
+    
+    document.onkeydown=function(e){
+    if(e.keyCode == 13 && e.ctrlKey){
+                 // 这里实现换行
+        wtx.value += "\r\n";
+    }else if(e.keyCode == 13){
+        // 避免回车键换行
+        e.preventDefault();
+        // 下面写你的发送消息的代码
+        onUpdate();
+    }
+}
         
 </script> 
 
