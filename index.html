@@ -112,6 +112,10 @@
     
     function initName() {
         if (name == ntx.value) return;
+        if (ntx.value == "") {
+            alert("不能使用空格昵称~~~");
+            return;
+        }
         var m = "";
         if (name == "") {
             m = "欢迎新用户[" + ntx.value + "]";
