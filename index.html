@@ -15,12 +15,28 @@
 }, function(error){
     // 处理请求失败打错误
 });
-      
-    </script>
+
+
     
     
   </head>
   <body>
-   
+   <textarea style="width:400px; height: 300px" id="tx"> 
+    
+    
+</textarea>
+
+<script>
+    var tx = document.getElementById("tx");
+    function onValue() {
+        ref.on("value", function(snapshot) {
+            console.log(snapshot.val());
+            tx.innerHTML = JSON.stringify(snapshot.val(), null, '\t');
+        });
+    }
+        
+</script> 
+
+
   </body>
 </html>
