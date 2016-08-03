@@ -40,11 +40,10 @@
         var v = tx.value;
         console.log(v);
         var obj = eval('(' + v + ')');
-        alert(obj["msgs"][0]["msg"]);
         ref.set(obj, function(error) {
     if (error == null){
         // 数据同步到野狗云端成功完成
-    } else alert(error);
+    } else console.log(error);
 });
     }
         
