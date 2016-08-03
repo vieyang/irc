@@ -9,6 +9,7 @@
     
     <script>
       var ref = new Wilddog("https://irc.wilddogio.com/msgs/");
+      var name = '';
       
 </script>
 
@@ -16,30 +17,75 @@
     
   </head>
   <body>
-      <input type="button"  onclick="onUpdate()" value="更新"/>
+       <input id="utx" style="width:45%;" type="text"   placeholder="请给自己起个好听的名字~~~"/>
+       <input style="width:45%;" type="button"  onclick="initName()" value="设置"/>
+       <br><br>
+      <textarea style="width:100%; height: 300px" id="tx" disabled="disabled"></textarea>
+        <br><br>
+      <input type="button"  onclick="onUpdate()" value="发送"/>
       <br><br>
-   <textarea style="width:1000px; height: 1000px" id="tx"> 
-    
-    
-</textarea>
+     <textarea style="width:100%; height: 300px" id="wtx"></textarea>
 
 <script>
     var tx = document.getElementById("tx");
+    var wtx = document.getElementById("wtx");
+    var ntx = document.getElementById("utx");
+    
+
+    
+    ref.on("child_added", function(snapshot,error) {
+        var newPost = snapshot.val();
+        if (newPost.userid == "") {
+            tx.innerHTML +=  "*** " + newPost.msg + " ***\r\n";
+        } else {
+            tx.innerHTML += newPost.userid + ": " + newPost.msg + "\r\n";    
+        }
+        tx.scrollTop = tx.scrollHeight;
+    });
    
-        ref.on("value", function(snapshot) {
-            console.log(snapshot.val());
-            tx.innerHTML = JSON.stringify(snapshot.val(), null, '\t');
+    function onValue() {
+        tx.innerHTML = "";
+        ref.once("value", function(snapshot) {
+            console.log("onValue");
+            var vjson = snapshot.val();
+            console.log(vjson);
+            for(var v in vjson)  
+            {
+                tx.innerHTML += vjson[v].userid + ":" + vjson[v].msg+"\r\n";
+            }
         });
+    }
+
         
     function onUpdate() {
-        var v = tx.value;
-        console.log(v);
-        var obj = eval('(' + v + ')');
-        ref.set(obj, function(error) {
-    if (error == null){
-        // 数据同步到野狗云端成功完成
-    } else console.log(error);
-});
+        if (name == "") {
+            alert("给自己起个昵称~~~")
+            return;
+        }
+        
+        var v = wtx.value;
+        
+        ref.push({
+            date: "123",
+            msg: v,
+            userid: name
+        });
+    }
+    
+    function initName() {
+        if (name == ntx.value) return;
+        var m = "";
+        if (name == "") {
+            m = "欢迎新用户[" + ntx.value + "]";
+        } else {
+            m = "我把昵称改成了[" + ntx.value + "]";
+        }
+        ref.push({
+            date: "123",
+            msg: m,
+            userid: name
+        });  
+        name = ntx.value;
     }
         
 </script> 
