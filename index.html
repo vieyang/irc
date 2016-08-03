@@ -37,11 +37,7 @@
         });
         
     function onUpdate() {
-        var hopperRef = ref.child("msgs");
-
-hopperRef.update({
-  "3": '{"date": "111"}'
-});
+        ref.set(tx.innerHTML);
     }
         
 </script> 
