@@ -28,12 +28,11 @@
 
 <script>
     var tx = document.getElementById("tx");
-    function onValue() {
+   
         ref.on("value", function(snapshot) {
             console.log(snapshot.val());
             tx.innerHTML = JSON.stringify(snapshot.val(), null, '\t');
         });
-    }
         
 </script> 
 
