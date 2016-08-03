@@ -21,7 +21,8 @@
     
   </head>
   <body>
-   <textarea style="width:400px; height: 300px" id="tx"> 
+      <input type="button"  onclick="onUpdate()" value="更新"/>
+   <textarea style="width:1400px; height: 1300px" id="tx"> 
     
     
 </textarea>
@@ -33,6 +34,14 @@
             console.log(snapshot.val());
             tx.innerHTML = JSON.stringify(snapshot.val(), null, '\t');
         });
+        
+    function onUpdate() {
+        var hopperRef = ref.child("msgs");
+
+hopperRef.update({
+  "3": '{"date": "111"}'
+});
+    }
         
 </script> 
 
