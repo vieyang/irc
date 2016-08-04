@@ -120,7 +120,8 @@
         tx.scrollTop = tx.scrollHeight;
         
         
-        if (newPost.date != 1 && newPost.userid != ntx.value && newPost.userid != "") {
+        if (newPost.date != 1 && newPost.userid != ntx.value 
+        	&& newPost.userid != "" && document.visibilityState==="hidden") {
         
             if(Notification && Notification.permission === "granted"){
                 
