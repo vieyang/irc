@@ -9,10 +9,38 @@
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"></script>
 
 	<script src = "https://cdn.wilddog.com/js/client/current/wilddog.js" ></script>
+    <script type="text/javascript">
+    function getCookie(c_name)
+    {
+        if (document.cookie.length>0)
+        { 
+            c_start=document.cookie.indexOf(c_name + "=");
+            if (c_start!=-1)
+            { 
+                c_start=c_start + c_name.length+1;
+                c_end=document.cookie.indexOf(";",c_start);
+                if (c_end==-1) c_end=document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            } 
+        }
+        return "";
+    }
     
+    function setCookie(c_name,value,expiredays)
+    {
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate()+expiredays);
+        document.cookie=c_name+ "=" +escape(value)+
+            ((expiredays==null) ? "" : "; expires="+exdate.toGMTString());
+    }
+    
+    
+    </script>    
     <script>
       var ref = new Wilddog("https://irc.wilddogio.com/msgs/");
-      var name = '';
+      var name = getCookie('nickname');
+      if (name == null) name = '';
+      
 	</script>
 
 </head>
@@ -56,12 +84,12 @@
 		</div>
 	</div>
 </div>
-
 <script>
     var tx = document.getElementById("tx");
     var wtx = document.getElementById("wtx");
     var ntx = document.getElementById("utx");
     
+
     
     ref.on("child_added", function(snapshot,error) {
         var newPost = snapshot.val();
@@ -72,6 +100,25 @@
         }
         tx.scrollTop = tx.scrollHeight;
     });
+    
+    ntx.value = name;
+    /**
+    if (name == "") {
+        ref.push({
+            date: "0",
+            msg: "有人来了~~~",
+            userid: ""
+        });
+    } else {
+        if (ntx.value != "") {
+            ref.push({
+                date: "123",
+                msg: "我又回来啦~~~",
+                userid: name
+            });
+        }
+    }
+    **/
    
     function onValue() {
         tx.innerHTML = "";
@@ -128,6 +175,7 @@
             userid: name
         });  
         name = ntx.value;
+        setCookie('nickname',name,365)
     }
     
     
@@ -143,6 +191,9 @@
     }
 }
         
-</script> 
+</script>
+
+
+
  </body>
 </html>
