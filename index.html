@@ -216,8 +216,9 @@
             m = "我把昵称改成了[" + ntx.value + "]";
         }
         
+        var date = new Date().getTime();
         ref.push({
-            date: 1,
+            date: date,
             msg: m,
             userid: name
         });  
